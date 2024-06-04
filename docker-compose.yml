@@ -1,0 +1,25 @@
+services:
+  payload:
+    container_name: payload
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    env_file:
+      - .env.prod
+
+  postgres:
+    container_name: postgres
+    image: postgres:16.3
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
+
+volumes:
+  data:
